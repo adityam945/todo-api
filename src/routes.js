@@ -1,9 +1,9 @@
 const todoController = require("./controller/todo.controller");
 const router = require("express").Router();
 
+router.route('/create').post(todoController.create);
+router.route('/get').get(todoController.getAll);
 
-module.exports = (app) => {
-    // create a recording
-    router.post('/create', todoController.create);
 
-};
+
+module.exports = router

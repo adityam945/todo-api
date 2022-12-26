@@ -4,20 +4,42 @@ const todoModel = require("../model/todo.model");
 // let Video = require("../models/video.model");
 
 module.exports = {
-    // getAll: async (request, reply) => {
-    //     try{
-    //         let 
-    //     }catch(e){
 
-    //     }
-    // },
-
+    getAll: async (request, reply) => {
+        try{
+            // const allTodos = await todoModel.find({},{"__v": 0, "deleted": 0, "createdAt": 0, "updatedAt": 0});
+            let allTodos = await todoModel.find({},{description: 1, _id: 0});
+           
+            reply.json({
+                status: 200,
+                data: allTodos
+            })
+        }catch(e){
+            reply.json({
+                status: 400,
+                error: e
+            })
+        }
+    },
     create: async (request, reply) => {
         try{
             let requestData = request.body;
+
+            const newtodo = await todoModel.create({
+            "title": requestData.title,
+            "description": requestData.description,
+            "date_time": requestData.date_time,
+            "others": requestData.others
+            });
+
+            // 
+            // delete newtodo['_id']
+            // delete newtodo['updatedAt']
+            // delete newtodo['__v']
+            // console.log(newtodo)
             reply.json({
                 status: 200,
-                data: requestData
+                data: newtodo
             })
         }catch(e){
             reply.json({
